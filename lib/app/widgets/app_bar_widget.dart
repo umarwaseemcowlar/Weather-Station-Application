@@ -5,7 +5,7 @@ AppBar getAppBar(BuildContext context, WeatherScreenController controller) {
   return AppBar(
     backgroundColor: Colors.transparent,
     elevation: 0,
-    iconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
+    iconTheme: const IconThemeData(color: Colors.white),
     title: TextField(
       focusNode: FocusNode(),
       controller: controller.cityController.value,
@@ -21,7 +21,7 @@ AppBar getAppBar(BuildContext context, WeatherScreenController controller) {
               )
             : IconButton(
                 onPressed: controller.searchWeatherForACity,
-                icon: const Icon(Icons.search),
+                icon: const Icon(Icons.search, color: Colors.white),
               ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         hintText: "Search",

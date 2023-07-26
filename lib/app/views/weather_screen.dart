@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -5,6 +6,7 @@ import 'package:weather_station_app/app/controllers/weather_controller.dart';
 import 'package:weather_station_app/app/themes/colors.dart';
 import 'package:weather_station_app/app/widgets/app_bar_widget.dart';
 import 'package:weather_station_app/app/widgets/app_drawer.dart';
+import 'package:weather_station_app/app/widgets/weather_data_display_widget.dart';
 import 'package:weather_station_app/app/widgets/weather_panel_widget.dart';
 import 'package:weather_station_app/global/common/animation_widget.dart';
 import 'package:weather_station_app/global/constants/images_handler.dart';
@@ -19,6 +21,7 @@ class WeatherScreen extends GetView<WeatherScreenController> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
+        drawerDragStartBehavior: DragStartBehavior.down,
         backgroundColor: AppColors.primaryPurpleLight,
         drawer: const AppDrawerWidget(),
         body: Stack(
@@ -41,23 +44,12 @@ class WeatherScreen extends GetView<WeatherScreenController> {
                     children: [
                       getAppBar(context, controller),
                       const SizedBox(height: 20),
-                      Text(controller.weatherData.value?.name ?? "", style: Theme.of(context).textTheme.displayLarge),
-                      Text("${controller.weatherData.value?.main?.temp!.farenheitToCelcius() ?? ""}°",
-                          style: Theme.of(context).textTheme.headlineLarge),
-                      Text(controller.weatherData.value?.weather?.first.description!.toLowerCase() ?? "",
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // humidity
-                          Text("Humidity: ${controller.weatherData.value?.main?.humidity.toString() ?? ""}%",
-                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
-                          const SizedBox(width: 20),
-                          Text("Wind: ${controller.weatherData.value?.wind?.speed.toString() ?? ""} km/h",
-                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
-                        ],
-                      ),
+                      WeatherDataDisplayWidget(
+                          cityName: controller.weatherData.value?.name ?? "",
+                          temperature: "${controller.weatherData.value?.main?.temp!.farenheitToCelcius() ?? ""}°",
+                          weatherDescription: controller.weatherData.value?.weather?.first.description!.toUpperCase() ?? "",
+                          humidity: "Humidity: ${controller.weatherData.value?.main?.humidity.toString() ?? ""}%",
+                          wind: "Wind: ${controller.weatherData.value?.wind?.speed.toString() ?? ""} km/h"),
                       const SizedBox(height: 10),
                       SlideAnimationWidget(
                         delay: 0.5,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:weather_station_app/app/routes/app_routes.dart';
 import 'package:weather_station_app/app/themes/colors.dart';
 
 class AppDrawerWidget extends StatefulWidget {
@@ -30,11 +32,27 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Get.back();
+            Get.toNamed(AppRoutes.weatherScreen);
+          },
           child: ListTile(
             leading: const Icon(Icons.home, color: Colors.white),
             title: Text(
               "Home",
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 14),
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Get.back();
+            Get.toNamed(AppRoutes.favoritesScreen);
+          },
+          child: ListTile(
+            leading: const Icon(Icons.favorite, color: Colors.white),
+            title: Text(
+              "Favorites",
               style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 14),
             ),
           ),
