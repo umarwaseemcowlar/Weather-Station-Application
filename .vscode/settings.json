@@ -1,5 +1,11 @@
 {
     "debug.console.wordWrap": false,
     "editor.wordWrapColumn": 300,
-    "dart.lineLength": 140
+    "dart.lineLength": 140,
+    "cSpell.words": [
+        "Getx",
+        "Umar",
+        "vsync",
+        "Waseem"
+    ]
 }

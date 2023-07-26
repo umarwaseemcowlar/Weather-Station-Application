@@ -3,72 +3,56 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_station_app/app/controllers/weather_controller.dart';
+import 'package:weather_station_app/app/themes/colors.dart';
+import 'package:weather_station_app/app/widgets/app_bar_widget.dart';
+import 'package:weather_station_app/app/widgets/app_drawer.dart';
+import 'package:weather_station_app/global/common/animation_widget.dart';
+import 'package:weather_station_app/global/constants/images_handler.dart';
 
-class WeatherScreen extends GetView<WeatherScreenController> {
+class WeatherScreen extends StatelessWidget {
   const WeatherScreen({Key? key}) : super(key: key);
-
-  final String cityName = "India";
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Obx(
-          () {
-            if (controller.isLoading.value) {
-              return const CircularProgressIndicator();
-            } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Location: $cityName",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Cloud PCT: ${controller.weatherData.value?.cloudPct.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Humidity: ${controller.weatherData.value?.humidity.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Min Temperature: ${controller.weatherData.value?.minTemp.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Max Temperature: ${controller.weatherData.value?.maxTemp.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Wind Speed: ${controller.weatherData.value?.windSpeed.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Wind Degrees: ${controller.weatherData.value?.windDegrees.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Sunrise: ${controller.weatherData.value?.sunrise.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    "Sunset: ${controller.weatherData.value?.sunset.toString()}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                ],
-              );
-            }
-          },
+    return GetBuilder<WeatherScreenController>(builder: (weatherScreenController) {
+      return Scaffold(
+        backgroundColor: AppColors.primaryPurpleLight,
+        drawer: const AppDrawerWidget(),
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageHandler.nightImage),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: Column(
+              children: [
+                getAppBar(context),
+                const SizedBox(height: 20),
+                Text(weatherScreenController.cityName.value, style: Theme.of(context).textTheme.displayLarge),
+                Text("19°", style: Theme.of(context).textTheme.headlineLarge),
+                Text("Mostly Clear", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
+                const SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Humidity: 50%", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
+                    const SizedBox(width: 20),
+                    Text("Wind: 10 km/h", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                SlideAnimationWidget(
+                  delay: 0.5,
+                  child: Image.asset(ImageHandler.houseImage),
+                ),
+                // buildWeatherPanel(),
+              ],
+            ),
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          controller.getWeatherByCity(cityName);
-        },
-        child: const Icon(Icons.refresh),
-      ),
-    );
+      );
+    });
   }
 }
