@@ -26,55 +26,61 @@ class _WeatherScreenState extends State<WeatherScreen> {
       return Scaffold(
         backgroundColor: AppColors.primaryPurpleLight,
         drawer: const AppDrawerWidget(),
-        body: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (_panelController.isPanelOpen) {
-                  _panelController.close();
-                }
-              },
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(ImageHandler.nightImage),
-                    fit: BoxFit.cover,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await weatherScreenController.getWeatherForCurrentPosition();
+          },
+          child: Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if (_panelController.isPanelOpen) {
+                    _panelController.close();
+                  }
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(ImageHandler.nightImage),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                child: Center(
-                  child: Column(
-                    children: [
-                      getAppBar(context),
-                      const SizedBox(height: 20),
-                      Text(weatherScreenController.cityName.value, style: Theme.of(context).textTheme.displayLarge),
-                      Text("19°", style: Theme.of(context).textTheme.headlineLarge),
-                      Text("Mostly Clear", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
-                      const SizedBox(height: 6),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Humidity: 50%", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
-                          const SizedBox(width: 20),
-                          Text("Wind: 10 km/h", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      SlideAnimationWidget(
-                        delay: 0.5,
-                        child: Image.asset(ImageHandler.houseImage),
-                      ),
-                    ],
+                  child: Center(
+                    child: Column(
+                      children: [
+                        getAppBar(context),
+                        const SizedBox(height: 20),
+                        Text(weatherScreenController.cityName.value, style: Theme.of(context).textTheme.displayLarge),
+                        Text("${weatherScreenController.temperature.value}°", style: Theme.of(context).textTheme.headlineLarge),
+                        Text(weatherScreenController.weatherDescription.value.toUpperCase(),
+                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
+                        const SizedBox(height: 6),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Humidity: 50%", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
+                            const SizedBox(width: 20),
+                            Text("Wind: 10 km/h", style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.grey)),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        SlideAnimationWidget(
+                          delay: 0.5,
+                          child: Image.asset(ImageHandler.houseImage),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            SlidingUpPanel(
-              color: Colors.transparent,
-              panelBuilder: (scrollController) => buildWeatherPanel(),
-              minHeight: 250, // Set the minimum height of the sliding panel
-              controller: _panelController, // If you want to control the panel manually
-            ),
-          ],
+              SlidingUpPanel(
+                color: Colors.transparent,
+                panelBuilder: (scrollController) => buildWeatherPanel(),
+                minHeight: 250, // Set the minimum height of the sliding panel
+                controller: _panelController, // If you want to control the panel manually
+              ),
+            ],
+          ),
         ),
       );
     });

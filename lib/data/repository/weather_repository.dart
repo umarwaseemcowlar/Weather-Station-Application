@@ -19,9 +19,10 @@ class WeatherRepository {
     final dynamic response = await ApiRequestHandler.getRequest(requestUrl, null);
 
     if (response != null) {
+      var weatherDataModel = WeatherDataModel.fromMap(response);
       Logger.info("WeatherRepository.getWeatherData(): Response: $response");
-      Fluttertoast.showToast(msg: "Fetched weather data for $latitude $longitude", backgroundColor: Colors.green);
-      return WeatherDataModel.fromMap(response);
+      Fluttertoast.showToast(msg: "Fetched weather data for ${weatherDataModel.name}", backgroundColor: Colors.green);
+      return weatherDataModel;
     } else {
       Logger.error("WeatherRepository.getWeatherData(): Error Response: $response");
       Fluttertoast.showToast(msg: "Failed to get weather data", backgroundColor: Colors.red);
