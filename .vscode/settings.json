@@ -1,0 +1,5 @@
+{
+    "debug.console.wordWrap": false,
+    "editor.wordWrapColumn": 300,
+    "dart.lineLength": 140
+}
