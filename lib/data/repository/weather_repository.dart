@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:weather_station_app/data/models/weather_data_model.dart';
 import 'package:weather_station_app/data/services/api/api_request_handler.dart';
-import 'package:weather_station_app/global/constants/api_endpoints.dart';
 import 'package:weather_station_app/global/constants/request_type_enum.dart';
 import 'package:weather_station_app/global/utils/configs.dart';
 import 'package:weather_station_app/global/utils/logger.dart';
 
-import '../models/weather_model.dart';
-
 class WeatherRepository {
   static final Configs _configs = Get.find<Configs>();
 
-  static Future<WeatherModel?>? getWeatherData({required String cityName}) async {
-    final String requestUrl = _configs.getUrl(RequestType.thirdParty, WeatherApiEndpoint.weather, {"city": cityName});
-    final Map<String, String> headers = _configs.getHeaders(RequestType.thirdParty);
+  static Future<WeatherDataModel?>? getWeatherData({required String latitude, required String longitude}) async {
+    final String requestUrl = _configs.getUrl(
+      RequestType.thirdParty,
+      {"lat": latitude, "lon": longitude},
+    );
 
-    final dynamic response = await ApiRequestHandler.getRequest(requestUrl, headers);
+    final dynamic response = await ApiRequestHandler.getRequest(requestUrl, null);
 
     if (response != null) {
       Logger.info("WeatherRepository.getWeatherData(): Response: $response");
-      Fluttertoast.showToast(msg: "Fetched weather data for $cityName", backgroundColor: Colors.green);
-      return WeatherModel.fromMap(response);
+      Fluttertoast.showToast(msg: "Fetched weather data for $latitude $longitude", backgroundColor: Colors.green);
+      return WeatherDataModel.fromMap(response);
     } else {
       Logger.error("WeatherRepository.getWeatherData(): Error Response: $response");
       Fluttertoast.showToast(msg: "Failed to get weather data", backgroundColor: Colors.red);

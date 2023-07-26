@@ -3,6 +3,8 @@
     "editor.wordWrapColumn": 300,
     "dart.lineLength": 140,
     "cSpell.words": [
+        "dotenv",
+        "Fluttertoast",
         "Getx",
         "Umar",
         "vsync",
