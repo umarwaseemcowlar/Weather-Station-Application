@@ -37,7 +37,7 @@ class GeoLocatorUtility {
   }
 
   // determine coordinates by city name
-  Future<Position?> getCoordinatesFromCityName(String cityName) async {
+  static Future<Position?> getCoordinatesFromCityName(String cityName) async {
     try {
       List<Location> locations = await locationFromAddress(cityName);
       if (locations.isNotEmpty) {

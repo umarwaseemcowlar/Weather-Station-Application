@@ -1,52 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:weather_station_app/app/controllers/weather_controller.dart';
+import 'package:weather_station_app/global/common/custom_text_field.dart';
 
 AppBar getAppBar(BuildContext context, WeatherScreenController controller) {
   return AppBar(
     backgroundColor: Colors.transparent,
     elevation: 0,
     iconTheme: const IconThemeData(color: Colors.white),
-    title: TextField(
-      focusNode: FocusNode(),
-      controller: controller.cityController.value,
-      decoration: InputDecoration(
-        suffixIcon: controller.isLoadingWeatherForCity.value
-            ? SizedBox(
-                height: 10,
-                width: 10,
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.secondary,
-                  strokeWidth: 1,
-                ),
-              )
-            : IconButton(
-                onPressed: controller.searchWeatherForACity,
-                icon: const Icon(Icons.search, color: Colors.white),
-              ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-        hintText: "Search",
-        hintStyle: const TextStyle(color: Colors.grey),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.secondary,
-            width: 1,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
-            width: 1,
-          ),
-        ),
-      ),
-      style: const TextStyle(color: Colors.white),
+    title: CustomTextField(
+      textEditingController: controller.cityController.value,
+      icon: Icons.search,
+      onPressTrigger: controller.searchWeatherForACity,
+      isLoading: controller.isLoadingWeatherForCity.value,
     ),
     actions: [
       IconButton(
         onPressed: controller.getWeatherForCurrentPosition,
-        icon: const Icon(Icons.location_on),
+        icon: controller.isLoading.value ? const CircularProgressIndicator() : const Icon(Icons.location_on),
       ),
     ],
   );

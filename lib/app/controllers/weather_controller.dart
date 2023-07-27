@@ -44,7 +44,7 @@ class WeatherScreenController extends GetxController {
   Future<void> searchWeatherForACity() async {
     isLoadingWeatherForCity.value = true;
 
-    final Position? location = await GeoLocatorUtility().getCoordinatesFromCityName(cityController.value.text);
+    final Position? location = await GeoLocatorUtility.getCoordinatesFromCityName(cityController.value.text);
 
     if (location == null) {
       Logger.error("getWeatherByCity(): Location is null");

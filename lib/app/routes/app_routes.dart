@@ -10,7 +10,7 @@ class AppRoutes {
   static List<GetPage<dynamic>> get getAppRoutes {
     return [
       GetPage(name: weatherScreen, page: () => WeatherScreen()),
-      GetPage(name: favoritesScreen, page: () => const FavoritesScreen()),
+      GetPage(name: favoritesScreen, page: () => FavoritesScreen()),
       // GetPage(name: loginScreen, page: () => const LoginScreen()),
     ];
   }
