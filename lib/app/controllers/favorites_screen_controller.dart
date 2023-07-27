@@ -22,6 +22,20 @@ class FavoritesScreenController extends GetxController {
   Future<void> addFavoriteWeather() async {
     isLoading.value = true;
 
+    if (cityController.value.text.isEmpty) {
+      Logger.error("addFavoriteWeather(): City name is empty");
+      Fluttertoast.showToast(msg: "Enter a city name", backgroundColor: Colors.red);
+      isLoading.value = false;
+      return;
+    }
+
+    if (weatherDataList.any((element) => element.name?.toLowerCase() == cityController.value.text.toLowerCase())) {
+      Logger.error("addFavoriteWeather(): City already exists");
+      Fluttertoast.showToast(msg: "City already exists", backgroundColor: Colors.red);
+      isLoading.value = false;
+      return;
+    }
+
     final Rx<WeatherDataModel?> weatherData = WeatherDataModel().obs;
 
     final Position? location = await GeoLocatorUtility.getCoordinatesFromCityName(cityController.value.text);
