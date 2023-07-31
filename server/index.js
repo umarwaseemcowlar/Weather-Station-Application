@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 const HOST = "http://localhost"
 
 app.get('/', (req, res) => {
-    res.send('Hello, Weather Station!');
+    res.send('Hello, Weather Station');
 });
 
 app.listen(PORT, () => {

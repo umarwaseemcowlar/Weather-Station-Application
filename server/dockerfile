@@ -17,7 +17,7 @@ COPY . ./
 
 # Expose the port your Express app is listening on (change 3000 if needed)
 # docker app communicates with outside world by this port
-EXPOSE 3000
+EXPOSE $PORT
 
 # Command to start your Node.js app
 CMD ["npm", "start"]
