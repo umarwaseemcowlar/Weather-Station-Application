@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
-const port = 3000; // Change this port number if needed
+
+// pick port from env
+const PORT = process.env.PORT || 3000;
+const HOST = "http://localhost"
 
 app.get('/', (req, res) => {
     res.send('Hello, Weather Station!');
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on ${HOST}:${PORT}`);
 });
