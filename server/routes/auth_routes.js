@@ -44,7 +44,7 @@ router.post('/signup', async (req, res) => {
 
         users.push(newUser)
 
-        const jwtAccessToken = JwtHelper.generateToken({ email: email, name: name })
+        const jwtAccessToken = await JwtHelper.generateToken({ email: email, name: name })
 
         return res.status(200).json({
             success: validationResult.success,
@@ -93,7 +93,7 @@ router.post('/login', async (req, res) => {
         }
 
         // action based on validation result
-        const jwtAccessToken = JwtHelper.generateToken({ email: email, name: name })
+        const jwtAccessToken = await JwtHelper.generateToken({ email: email, name: name })
 
         return res.status(200).json({
             success: validationResult.success,
