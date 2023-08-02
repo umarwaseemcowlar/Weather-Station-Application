@@ -1,4 +1,6 @@
 import { InfluxDB } from "@influxdata/influxdb-client";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const TOKEN = process.env.INFLUX_DB_TOKEN;
 const URL = process.env.INFLUX_URL;
