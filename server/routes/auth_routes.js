@@ -1,7 +1,7 @@
 import Router from 'express';
 const router = Router();
 
-import UserModel from '../models/user_model.js';
+import UserModel from '../models/user_model.js'
 import Validator from '../helpers/validator.js'
 import users from '../controllers/users_list.js';
 
