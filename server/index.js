@@ -2,6 +2,9 @@
 import express from 'express';
 const app = express();
 
+import dotenv from 'dotenv';
+dotenv.config(); // load env variables
+
 // route imports
 import authRoutes from './routes/auth_routes.js';
 
@@ -14,7 +17,7 @@ const HOST = "http://localhost"
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // routes
-app.use("/", authRoutes);
+app.use("/auth", authRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello, Weather Station');

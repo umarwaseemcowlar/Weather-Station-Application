@@ -1,7 +1,11 @@
-import UserModel from "../models/user_model.js"
 
 var users = [
-    new UserModel("1", "John Doe", "john@gmail.com", "password"),
+    {
+        id: "1",
+        name: "John Doe",
+        email: "john@gmail.com",
+        password: "123456",
+    }
 ]
 
 export default users

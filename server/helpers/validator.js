@@ -1,21 +1,19 @@
-import users from "../controllers/users_list.js"
-
 class Validator {
 
-    static validateSignup(body) {
+    static validateSignup(name, email, password) {
         var errors = []
-        if (!body.name) {
+        if (!name) {
             errors.push("missing name field")
         }
-        if (!body.email) {
+        if (!email) {
             errors.push("missing email field")
         }
-        if (!body.password) {
+        if (!password) {
             errors.push("missing password field")
         }
-        if (users.find(user => user.email === body.email)) {
-            errors.push("email already exists")
-        }
+        // if (users.find(user => user.email === email)) {
+        //     errors.push("email already exists")
+        // }
 
         // if there are any errors, return them
         if (errors.length > 0) {
@@ -29,20 +27,20 @@ class Validator {
         }
     }
 
-    static validateLogin(body) {
+    static validateLogin(_name, email, password) {
         var errors = []
-        if (!body.email) {
+        if (!email) {
             errors.push("missing email field")
         }
-        if (!body.password) {
+        if (!password) {
             errors.push("missing password field")
         }
-        if (!users.find(user => user.email === body.email)) {
-            errors.push("email does not exist")
-        }
-        if (users.find(user => user.email === body.email && user.password !== body.password)) {
-            errors.push("password is incorrect")
-        }
+        // if (!users.find(user => user.email === email)) {
+        //     errors.push("email does not exist")
+        // }
+        // if (users.find(user => user.email === email && user.password !== password)) {
+        //     errors.push("password is incorrect")
+        // }
 
         // if there are any errors, return them
         if (errors.length > 0) {
@@ -53,7 +51,6 @@ class Validator {
         }
         return {
             success: true,
-            user: users.find(user => user.email === body.email),
         }
     }
 
