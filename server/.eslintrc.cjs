@@ -22,5 +22,12 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-    }
+    },
+    "globals": {
+        process: 'readonly',
+        __dirname: 'readonly',
+        module: 'readonly',
+        __filename: 'readonly',
+        require: 'readonly',
+    },
 }

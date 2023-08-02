@@ -9,6 +9,7 @@ import authRoutes from './routes/auth_routes.js';
 const PORT = process.env.PORT || 3000;
 const HOST = "http://localhost"
 
+
 // middle wares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -22,3 +23,4 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on ${HOST}:${PORT}`);
 });
+
